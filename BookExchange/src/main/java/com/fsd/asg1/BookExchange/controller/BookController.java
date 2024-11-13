@@ -31,7 +31,7 @@ public class BookController {
 	private BookService bookService;
 
 	@PostMapping
-	public ResponseEntity<Book> addBook(@Valid @RequestBody Book book) {
+	public ResponseEntity<Book> addBook( @RequestBody Book book) {
 		return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
 	}
 
@@ -47,9 +47,13 @@ public class BookController {
 	}
 
 	@GetMapping("/user/{user}")
-	public ResponseEntity<Book> getBookByUser(@PathVariable String user) {
-		return bookService.getBookByUser(user).map(book -> new ResponseEntity<>(book, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	public ResponseEntity<List<Book>> getBookByUser(@PathVariable String user) {
+		List<Book> books = bookService.getBookByUser(user);
+		if (books.size() != 0)
+			return new ResponseEntity<>(books, HttpStatus.OK);
+		else
+			new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return null;
 	}
 
 	@PutMapping("/id/{id}")
@@ -65,9 +69,10 @@ public class BookController {
 
 	@GetMapping("/search")
 	public List<Book> searchBooks(@RequestParam(required = false) String keyword,
-			@RequestParam(required = false) Boolean availabilityStatus, @RequestParam(required = false) String genre,
+			@RequestParam(required = false) Boolean availabile, @RequestParam(required = false) String genre,
 			@RequestParam(required = false) String location, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "10") int size) {
+		Boolean availabilityStatus = availabile;
 		return bookService.searchBooks(keyword, availabilityStatus, genre, location, page, size);
 	}
 }

@@ -55,10 +55,10 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public Optional<Book> getBookByUser(String user) {
+	public List<Book> getBookByUser(String user) {
 		String sql = "SELECT * FROM books WHERE user = ?";
 		List<Book> books = jdbcTemplate.query(sql, BOOK_ROW_MAPPER, user.toString());
-		return books.stream().findFirst();
+		return books;
 	}
 
 	@Override

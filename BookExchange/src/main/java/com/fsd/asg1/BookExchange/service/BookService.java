@@ -27,7 +27,7 @@ public class BookService {
         return bookDao.getBookById(id);
     }
     
-    public Optional<Book> getBookByUser(String user) {
+    public List<Book> getBookByUser(String user) {
     	return bookDao.getBookByUser(user);
     }
 

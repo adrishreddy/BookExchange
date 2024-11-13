@@ -13,7 +13,7 @@ public interface BookDao {
 
 	Optional<Book> getBookById(UUID id);
 
-	Optional<Book> getBookByUser(String user);
+	List<Book> getBookByUser(String user);
 
 	Book updateBook(UUID id, Book updatedBook);
 
