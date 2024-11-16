@@ -20,6 +20,7 @@ public class ExchangeRequestRepository  {
 
 	    private final RowMapper<ExchangeRequest> exchangeRequestRowMapper = (rs, rowNum) -> {
 	        ExchangeRequest request = new ExchangeRequest();
+	        request.setBookName(rs.getString("book_name"));
 	        request.setId(UUID.fromString(rs.getString("id")));
 	        request.setSenderId(rs.getString("sender_id"));
 	        request.setRecipientId(rs.getString("recipient_id"));
@@ -32,13 +33,13 @@ public class ExchangeRequestRepository  {
 	    };
 
 	    public void save(ExchangeRequest request) {
-	        jdbcTemplate.update("INSERT INTO exchange_requests (id, sender_id, recipient_id, book_id, delivery_method, exchange_duration, status, last_modified) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
-	                request.getId().toString(), request.getSenderId(), request.getRecipientId(), request.getBookId().toString(),
+	        jdbcTemplate.update("INSERT INTO exchange_requests (book_name, id, sender_id, recipient_id, book_id, delivery_method, exchange_duration, status, last_modified) VALUES (?,?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
+	                request.getBookName(), request.getId().toString(), request.getSenderId(), request.getRecipientId(), request.getBookId().toString(),
 	                request.getDeliveryMethod(), request.getExchangeDuration(), request.getStatus());
 	    }
 
 	    public List<ExchangeRequest> findByUserId(String userId) {
-	        return jdbcTemplate.query("SELECT * FROM exchange_requests WHERE sender_id = ? OR recipient_id = ?", 
+	        return jdbcTemplate.query("SELECT * FROM exchange_requests WHERE sender_id = ? OR recipient_id = ? order by last_modified desc", 
 	                exchangeRequestRowMapper, userId, userId);
 	    }
 

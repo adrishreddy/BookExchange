@@ -13,6 +13,14 @@ public class ExchangeRequest {
 	private String lastModified;
 	private String status; // pending, accepted, rejected, modified
 
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
 	public String getLastModified() {
 		return lastModified;
 	}

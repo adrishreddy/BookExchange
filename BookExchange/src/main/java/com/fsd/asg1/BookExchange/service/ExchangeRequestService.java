@@ -14,8 +14,9 @@ public class ExchangeRequestService {
     @Autowired
     private ExchangeRequestRepository exchangeRequestRepository;
 
-    public void sendExchangeRequest(String senderId, String recipientId, UUID bookId, String deliveryMethod, String exchangeDuration) {
+    public void sendExchangeRequest(String bookName, String senderId, String recipientId, UUID bookId, String deliveryMethod, String exchangeDuration) {
         ExchangeRequest request = new ExchangeRequest();
+        request.setBookName(bookName);
         request.setId(UUID.randomUUID());
         request.setSenderId(senderId);
         request.setRecipientId(recipientId);

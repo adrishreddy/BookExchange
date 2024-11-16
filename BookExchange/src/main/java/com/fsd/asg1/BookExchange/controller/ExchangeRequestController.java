@@ -26,7 +26,7 @@ public class ExchangeRequestController {
 
     @PostMapping("/request")
     public ResponseEntity<String> sendExchangeRequest(@RequestBody ExchangeRequest request) {
-        exchangeRequestService.sendExchangeRequest(request.getSenderId(),request.getRecipientId(),request.getBookId(), request.getDeliveryMethod(), request.getExchangeDuration());
+        exchangeRequestService.sendExchangeRequest(request.getBookName(),request.getSenderId(),request.getRecipientId(),request.getBookId(), request.getDeliveryMethod(), request.getExchangeDuration());
         return ResponseEntity.ok("Exchange request sent!");
     } 
 
